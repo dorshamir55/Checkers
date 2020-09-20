@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CheckersUI
 {
-	static class Program
+	public class GameUI
 	{
-		[STAThread]
-		static void Main()
+		public GameUI()
 		{
-			new GameUI();
-			/*Application.EnableVisualStyles();
+			Start();
+		}
+
+		public void Start()
+		{
+			Application.EnableVisualStyles();
 			FormGameSettings gameSettings = new FormGameSettings();
 			gameSettings.ShowDialog();
-			new FormGame().ShowDialog();*/
+			new FormGame().ShowDialog();
 		}
 	}
 }

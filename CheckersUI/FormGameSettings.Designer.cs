@@ -1,6 +1,6 @@
 ﻿namespace CheckersUI
 {
-	partial class formGameSettings
+	partial class FormGameSettings
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -55,8 +55,7 @@
 			this.radioButton1.Location = new System.Drawing.Point(24, 29);
 			this.radioButton1.Name = "radioButton1";
 			this.radioButton1.Size = new System.Drawing.Size(48, 17);
-			this.radioButton1.TabIndex = 1;
-			this.radioButton1.TabStop = true;
+			this.radioButton1.TabIndex = 0;
 			this.radioButton1.Text = "6 x 6";
 			this.radioButton1.UseVisualStyleBackColor = true;
 			// 
@@ -67,7 +66,6 @@
 			this.radioButton2.Name = "radioButton2";
 			this.radioButton2.Size = new System.Drawing.Size(48, 17);
 			this.radioButton2.TabIndex = 1;
-			this.radioButton2.TabStop = true;
 			this.radioButton2.Text = "8 x 8";
 			this.radioButton2.UseVisualStyleBackColor = true;
 			// 
@@ -77,8 +75,7 @@
 			this.radioButton3.Location = new System.Drawing.Point(132, 29);
 			this.radioButton3.Name = "radioButton3";
 			this.radioButton3.Size = new System.Drawing.Size(60, 17);
-			this.radioButton3.TabIndex = 1;
-			this.radioButton3.TabStop = true;
+			this.radioButton3.TabIndex = 2;
 			this.radioButton3.Text = "10 x 10";
 			this.radioButton3.UseVisualStyleBackColor = true;
 			// 
@@ -106,7 +103,7 @@
 			this.checkBoxPlayer2.Location = new System.Drawing.Point(24, 96);
 			this.checkBoxPlayer2.Name = "checkBoxPlayer2";
 			this.checkBoxPlayer2.Size = new System.Drawing.Size(67, 17);
-			this.checkBoxPlayer2.TabIndex = 2;
+			this.checkBoxPlayer2.TabIndex = 4;
 			this.checkBoxPlayer2.Text = "Player 2:";
 			this.checkBoxPlayer2.UseVisualStyleBackColor = true;
 			// 
@@ -123,7 +120,7 @@
 			this.textBoxPlayer2.Location = new System.Drawing.Point(100, 94);
 			this.textBoxPlayer2.Name = "textBoxPlayer2";
 			this.textBoxPlayer2.Size = new System.Drawing.Size(92, 20);
-			this.textBoxPlayer2.TabIndex = 3;
+			this.textBoxPlayer2.TabIndex = 5;
 			this.textBoxPlayer2.Text = "[PC]";
 			// 
 			// buttonDone
@@ -131,7 +128,7 @@
 			this.buttonDone.Location = new System.Drawing.Point(115, 125);
 			this.buttonDone.Name = "buttonDone";
 			this.buttonDone.Size = new System.Drawing.Size(77, 23);
-			this.buttonDone.TabIndex = 4;
+			this.buttonDone.TabIndex = 6;
 			this.buttonDone.Text = "Done";
 			this.buttonDone.UseVisualStyleBackColor = true;
 			// 
@@ -151,6 +148,7 @@
 			this.Controls.Add(this.labelPlayer1);
 			this.Controls.Add(this.labelPlayers);
 			this.Controls.Add(this.labelBoardSize);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.MaximizeBox = false;
 			this.MaximumSize = new System.Drawing.Size(220, 200);
 			this.MinimizeBox = false;
