@@ -11,9 +11,10 @@ namespace CheckersUI
 {
 	public partial class FormGameSettings : Form
 	{
-		private string m_BoardSize;
+		private int m_BoardSize;
 		private string m_NamePlayer1;
 		private string m_NamePlayer2;
+		private bool m_IsComputer = true;
 
 		public FormGameSettings()
 		{
@@ -28,7 +29,7 @@ namespace CheckersUI
 			this.buttonDone.Click += ButtonDone_Click;
 		}
 
-		public string BoardSize
+		public int BoardSize
 		{
 			get
 			{
@@ -67,6 +68,19 @@ namespace CheckersUI
 			}
 		}
 
+		public bool IsComputer
+		{
+			get
+			{
+				return m_IsComputer;
+			}
+
+			private set
+			{
+				m_IsComputer = value;
+			}
+		}
+
 		private void TextBoxPlayer_KeyPress(object sender, KeyPressEventArgs e)
 		{
 			if (e.KeyChar == ' ' || (sender as TextBox).TextLength == 12 && e.KeyChar != (char)Keys.Back)
@@ -81,7 +95,7 @@ namespace CheckersUI
 			{
 				MessageBox.Show("Player name can't be blank");
 			}
-			else if (m_BoardSize is null)
+			else if (m_BoardSize == 0)
 			{
 				MessageBox.Show("Please choose size board");
 			}
@@ -98,11 +112,13 @@ namespace CheckersUI
 		{
 			if (checkBoxPlayer2.Checked == true)
 			{
+				IsComputer = false;
 				textBoxPlayer2.Enabled = true;
 				textBoxPlayer2.Text = "";
 			}
 			else
 			{
+				IsComputer = true;
 				textBoxPlayer2.Enabled = false;
 				textBoxPlayer2.Text = "PC";
 			}
@@ -114,7 +130,9 @@ namespace CheckersUI
 
 			if (radioButtonChecked.Checked)
 			{
-				BoardSize = radioButtonChecked.Text.Substring(0, radioButtonChecked.Text.IndexOf(' '));
+				string size = radioButtonChecked.Text.Substring(0, radioButtonChecked.Text.IndexOf(' '));
+
+				BoardSize = int.Parse(size);
 			}
 		}
 	}
