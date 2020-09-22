@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,14 +15,25 @@ namespace CheckersUI
 	public partial class FormGame : Form
 	{
 		//private const int k_SquareSize = 40;
-		private SquareButton[,] m_buttonsMatrix;
+		//private SquareButton[,] m_ButtonsMatrix;
+		private MatrixButtons<SquareButton> m_ButtonsMatrix;
+		private GameLogic m_GameLogic;
 
-		public FormGame(int i_BoardSize, Player i_Player1, Player i_Player2)
+		public MatrixButtons<SquareButton> ButtonMatrix
+		{
+			get
+			{
+				return m_ButtonsMatrix;
+			}
+		}
+
+		public FormGame(GameLogic i_GameLogic)
 		{
 			InitializeComponent();
 
-			initializeBoard(i_BoardSize);
-			initializeNameAndScores(i_Player1, i_Player2);
+			m_GameLogic = i_GameLogic;
+			initializeBoard((int)i_GameLogic.GameBoard.Size);
+			initializeNameAndScores(i_GameLogic.CurrentPlayer, i_GameLogic.WaitingPlayer);
 		}
 
 		private void initializeNameAndScores(Player i_Player1, Player i_Player2)
@@ -36,81 +48,48 @@ namespace CheckersUI
 
 		private void initializeBoard(int i_BoardSize)
 		{
-			m_buttonsMatrix = new SquareButton[i_BoardSize, i_BoardSize];
+			m_ButtonsMatrix = new MatrixButtons<SquareButton>(i_BoardSize, i_BoardSize);
 
 			for (int row = 0; row < i_BoardSize; row++)
 			{
 				for (int col = 0; col < i_BoardSize; col++)
 				{
-					SquareButton squareButton = createSquare(row, col, i_BoardSize);
-					m_buttonsMatrix[row, col] = squareButton;
+					SquareButton squareButton = createSquareButton(row, col, i_BoardSize);
+					m_ButtonsMatrix[row, col] = squareButton;
+					squareButton.Click += SquareButton_Click;
 					panelBoard.Controls.Add(squareButton);
 				}
 			}
-
-			//this.Size = new Size(i_BoardSize * k_SquareSize, i_BoardSize * k_SquareSize + 5 * labelPlayer1Score.Bottom);
-			//this.FormBorderStyle = FormBorderStyle.FixedDialog;
 		}
 
-		private SquareButton createSquare(int i_Row, int i_Col, int i_BoardSize)
+		private void SquareButton_Click(object sender, EventArgs e)
 		{
-			Point point = new Point(i_Row, i_Col);
-			SquareButton squareButton = new SquareButton(point);
-			squareButton.Margin = Padding.Empty;
-			squareButton.Size = new Size(panelBoard.Width/i_BoardSize, panelBoard.Height / i_BoardSize);
-			squareButton.Location = new Point(squareButton.Width * i_Row, squareButton.Height * i_Col);
-			squareButton.BackColor = getBackColor(i_Row, i_Col);
-			squareButton.Enabled = isEnabledSquareButton(i_Row, i_Col);
-			squareButton.Text = getSquareSign(i_Row, i_Col, i_BoardSize);
-			squareButton.Font = new Font(squareButton.Font, FontStyle.Bold);
-			return squareButton;
-		}
+			SquareButton squareButtonChosen = sender as SquareButton;
+			string mySign, myKingSign;
 
-		private bool isEnabledSquareButton(int i_Row, int i_Col)
-		{
-			bool enabled = true;
+			mySign = ((char)m_GameLogic.CurrentPlayer.PlayerColor).ToString();
+			myKingSign = mySign == ((char)Square.ePlayerColor.White).ToString() ?
+				((char)Square.ePlayerColor.WhiteKing).ToString() : ((char)Square.ePlayerColor.BlackKing).ToString();
 
-			if (i_Row % 2 == 0 && i_Col % 2 == 0 || i_Row % 2 != 0 && i_Col % 2 != 0)
+			if (squareButtonChosen.Text.Equals("") ||
+				!squareButtonChosen.Text.Equals(mySign) && !squareButtonChosen.Text.Equals(myKingSign))
 			{
-				enabled = false;
-			}
-
-			return enabled;
-		}
-
-		private string getSquareSign(int i_Row, int i_Col, int i_BoardSize)
-		{
-			string sign = string.Empty;
-
-			if ((i_Row % 2 == 0 && i_Col % 2 != 0) || (i_Row % 2 != 0 && i_Col % 2 == 0))
-			{
-				if (i_Col < (i_BoardSize / 2) - 1)
-				{
-					sign = "O";
-				}
-				else if (i_Col > i_BoardSize / 2)
-				{
-					sign = "X";
-				}
-			}
-
-			return sign;
-		}
-
-		private Color getBackColor(int i_Row, int i_Col)
-		{
-			Color squareColor = new Color();
-
-			if (i_Row % 2 == 0 && i_Col % 2 == 0 || i_Row % 2 != 0 && i_Col % 2 != 0)
-			{
-				squareColor = Color.DarkGray;
+				MessageBox.Show("Please choose your squares!");
 			}
 			else
 			{
-				squareColor = Color.Beige;
-			}
 
-			return squareColor;
+			}
+		}
+
+		private SquareButton createSquareButton(int i_Row, int i_Col, int i_BoardSize)
+		{
+			Point point = new Point(i_Row, i_Col);
+			SquareButton squareButton = new SquareButton(point);
+			squareButton.Size = new Size(panelBoard.Width/i_BoardSize, panelBoard.Height / i_BoardSize);
+			squareButton.initializeSquareButtonDetails(i_Row, i_Col, i_BoardSize);
+			
+			return squareButton;
 		}
 	}
 }

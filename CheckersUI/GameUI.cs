@@ -10,9 +10,9 @@ namespace CheckersUI
 {
 	public class GameUI
 	{
-		private FormGameSettings m_gameSettings = new FormGameSettings();
+		private FormGameSettings m_GameSettings = new FormGameSettings();
 		private FormGame m_FormGame;
-		private GameLogic m_Game;
+		private GameLogic m_GameLogic;
 
 		public GameUI()
 		{
@@ -23,7 +23,7 @@ namespace CheckersUI
 		{
 			get
 			{
-				return m_gameSettings;
+				return m_GameSettings;
 			}
 		}
 
@@ -39,7 +39,7 @@ namespace CheckersUI
 		{
 			get
 			{
-				return m_Game;
+				return m_GameLogic;
 			}
 		}
 
@@ -48,7 +48,7 @@ namespace CheckersUI
 			bool ifFirstGame = true;
 			bool isStillPlaying = true;
 
-			GameSettings.ShowDialog();
+			m_GameSettings.ShowDialog();
 			startGame(ifFirstGame);
 			//TODO
 		}
@@ -56,28 +56,39 @@ namespace CheckersUI
 		private void startGame(bool i_IsFirstGame)
 		{
 			createGameInfo();
-			m_FormGame = new FormGame(GameSettings.BoardSize, GameLogic.CurrentPlayer, GameLogic.WaitingPlayer);
-			FormGame.ShowDialog();
+			m_FormGame = new FormGame(m_GameLogic);
+			//m_FormGame.PlayGame(m_GameLogic, m_GameSettings);
+			m_GameLogic.CalculatePlayerMoves();
+			//changeSquareButtonVisibility();
+			m_FormGame.ShowDialog();
 
-			/*while (!gameOver())
+			while (!gameOver())
 			{
-				if (GameLogic.LastMove != null)
-				{
-					Console.WriteLine(string.Format("{0}'s move was ({1}): {2}", GameLogic.LastPlayerName, (char)GameLogic.LastSignPlayerPlayed, GameLogic.LastMove));
-				}
-
-				Console.WriteLine(string.Format("It's {0}'s Turn ({1})", GameLogic.CurrentPlayer.Name, (char)GameLogic.CurrentPlayer.PlayerColor));
+				//change visibility of squareButtons
 				//Game.LastMove = getAndRunAMove();
-				if (GameLogic.LastMove == "Q")//TODO quir from game
+				if (m_GameLogic.LastMove == "Q")//TODO quit from game
 				{
-					GameLogic.IsQuit = true;
+					m_GameLogic.IsQuit = true;
 				}
 				else
 				{
 					//Change Board
-					GameLogic.SwitchPlayersAndCreateNewMoves();
+					m_GameLogic.SwitchPlayersAndCreateNewMoves();
 				}
-			}*/
+			}
+		}
+
+		private void changeSquareButtonVisibility()
+		{
+			foreach (Square square in m_GameLogic.CurrentPlayer.PlayerSquares)
+			{
+				m_FormGame.ButtonMatrix[square.Col, square.Row].Enabled = true;
+			}
+
+			foreach (Square square in m_GameLogic.WaitingPlayer.PlayerSquares)
+			{
+				m_FormGame.ButtonMatrix[square.Col, square.Row].Enabled = false;
+			}
 		}
 
 		private void createGameInfo()
@@ -87,15 +98,15 @@ namespace CheckersUI
 			Player.ePlayerType player2Type = Player.ePlayerType.Human;
 
 			//TODO check for another game
-			if (GameSettings.IsComputer)
+			if (m_GameSettings.IsComputer)
 			{
 				player2Type = Player.ePlayerType.Computer;
 			}
 
-			player1 = new Player(Player.ePlayerType.Human, Square.ePlayerColor.White, GameSettings.NamePlayer1);
-			player2 = new Player(player2Type, Square.ePlayerColor.Black, GameSettings.NamePlayer2);
-			board = new Board((Board.eBoradSize)GameSettings.BoardSize);
-			m_Game = new GameLogic(board, player1, player2);
+			player1 = new Player(Player.ePlayerType.Human, Square.ePlayerColor.White, m_GameSettings.NamePlayer1);
+			player2 = new Player(player2Type, Square.ePlayerColor.Black, m_GameSettings.NamePlayer2);
+			board = new Board((Board.eBoradSize)m_GameSettings.BoardSize);
+			m_GameLogic = new GameLogic(board, player1, player2);
 		}
 
 		/*private string getAndRunAMove()

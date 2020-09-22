@@ -19,6 +19,7 @@ namespace Ex02
         private Square.ePlayerColor m_LastSignPlayerPlayed;
         private string m_WinnerName = null;
         private bool m_isNeedToStopAfterRewardingKing = false;
+        private bool m_IsNextPlayerTurn = true;
 
         public Board GameBoard
         {
@@ -142,6 +143,19 @@ namespace Ex02
             set
             {
                 m_isNeedToStopAfterRewardingKing = value;
+            }
+        }
+
+        public bool IsNextPlayerTurn
+        {
+            get
+            {
+                return m_IsNextPlayerTurn;
+            }
+
+            set
+            {
+                m_IsNextPlayerTurn = value;
             }
         }
 
@@ -293,6 +307,11 @@ namespace Ex02
                 IsNeedToStopAfterRewardingKing = false;
                 swap(ref m_CurrentPlayer, ref m_WaitingPlayer);
                 CalculatePlayerMoves();
+                IsNextPlayerTurn = true;
+            }
+            else
+            {
+                IsNextPlayerTurn = false;
             }
         }
 
@@ -353,17 +372,5 @@ namespace Ex02
                 IsNeedToStopAfterRewardingKing = true;
             }
         }
-
-        /*        public void CalculateWinnerName()
-                {
-                    if (m_CurrentPlayer.Score > m_WaitingPlayer.Score)
-                    {
-                        m_WinnerName = m_CurrentPlayer.Name;
-                    }
-                    else if (m_CurrentPlayer.Score < m_WaitingPlayer.Score)
-                    {
-                        m_WinnerName = m_WaitingPlayer.Name;
-                    }
-                }*/
     }
 }

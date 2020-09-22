@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Ex02;
 
 namespace CheckersUI
 {
@@ -49,6 +50,32 @@ namespace CheckersUI
 			{
 				m_Point.Y = value;
 			}
+		}
+
+		public void initializeSquareButtonDetails(int i_Row, int i_Col, int i_BoardSize)
+		{
+			if (i_Row % 2 == 0 && i_Col % 2 == 0 || i_Row % 2 != 0 && i_Col % 2 != 0)
+			{
+				this.BackColor = Color.DarkGray;
+				this.Enabled = false;
+			}
+			else
+			{
+				this.BackColor = Color.Beige;
+				this.Enabled = true;
+				if (i_Col < (i_BoardSize / 2) - 1)
+				{
+					this.Text = ((char)Square.ePlayerColor.White).ToString();// "O";
+				}
+				else if (i_Col > i_BoardSize / 2)
+				{
+					this.Text = ((char)Square.ePlayerColor.Black).ToString();// "X";
+				}
+			}
+
+			this.Margin = Padding.Empty;
+			this.Font = new Font(this.Font, FontStyle.Bold);
+			this.Location = new Point(this.Width * i_Row, this.Height * i_Col);
 		}
 	}
 }
