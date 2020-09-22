@@ -27,7 +27,7 @@ namespace Ex02
         {
         }
 
-            public Player(ePlayerType i_PlayerType, Square.ePlayerColor i_PlayerColor, string i_Name, int i_Score)
+        public Player(ePlayerType i_PlayerType, Square.ePlayerColor i_PlayerColor, string i_Name, int i_Score)
         {
             m_PlayerType = i_PlayerType;
             m_PlayerColor = i_PlayerColor;
@@ -36,7 +36,7 @@ namespace Ex02
             m_PlayerSquares = new List<Square>();
             m_PlayerRegularMoves = new List<Move>();
             m_PlayerSkippingMoves = new List<Move>();
-    }
+        }
 
         public int Score
         {
