@@ -11,6 +11,7 @@ namespace CheckersUI
 		[STAThread]
 		static void Main()
 		{
+			Application.EnableVisualStyles();
 			new GameUI();
 			/*Application.EnableVisualStyles();
 			FormGameSettings gameSettings = new FormGameSettings();

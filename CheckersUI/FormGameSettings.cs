@@ -11,10 +11,8 @@ namespace CheckersUI
 {
 	public partial class FormGameSettings : Form
 	{
+		private const int k_MaxNameSize = 12;
 		private int m_BoardSize;
-		private string m_NamePlayer1;
-		private string m_NamePlayer2;
-		private bool m_IsComputer = true;
 
 		public FormGameSettings()
 		{
@@ -46,12 +44,7 @@ namespace CheckersUI
 		{
 			get
 			{
-				return m_NamePlayer1;
-			}
-
-			private set
-			{
-				m_NamePlayer1 = value;
+				return textBoxPlayer1.Text;
 			}
 		}
 
@@ -59,12 +52,7 @@ namespace CheckersUI
 		{
 			get
 			{
-				return m_NamePlayer2;
-			}
-
-			private set
-			{
-				m_NamePlayer2 = value;
+				return textBoxPlayer2.Text;
 			}
 		}
 
@@ -72,18 +60,21 @@ namespace CheckersUI
 		{
 			get
 			{
-				return m_IsComputer;
+				return !textBoxPlayer2.Enabled;
 			}
+		}
 
-			private set
+		public int MaxNameSize
+		{
+			get
 			{
-				m_IsComputer = value;
+				return k_MaxNameSize;
 			}
 		}
 
 		private void TextBoxPlayer_KeyPress(object sender, KeyPressEventArgs e)
 		{
-			if (e.KeyChar == ' ' || (sender as TextBox).TextLength == 12 && e.KeyChar != (char)Keys.Back)
+			if (e.KeyChar == ' ' || (sender as TextBox).TextLength == MaxNameSize && e.KeyChar != (char)Keys.Back)
 			{
 				e.Handled = true;
 			}
@@ -101,8 +92,6 @@ namespace CheckersUI
 			}
 			else
 			{
-				NamePlayer1 = textBoxPlayer1.Text;
-				NamePlayer2 = textBoxPlayer2.Text;
 				this.DialogResult = DialogResult.OK;
 				this.Close();
 			}
@@ -112,13 +101,11 @@ namespace CheckersUI
 		{
 			if (checkBoxPlayer2.Checked == true)
 			{
-				IsComputer = false;
 				textBoxPlayer2.Enabled = true;
 				textBoxPlayer2.Text = "";
 			}
 			else
 			{
-				IsComputer = true;
 				textBoxPlayer2.Enabled = false;
 				textBoxPlayer2.Text = "PC";
 			}

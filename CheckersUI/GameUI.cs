@@ -11,11 +11,12 @@ namespace CheckersUI
 	public class GameUI
 	{
 		private FormGameSettings m_gameSettings = new FormGameSettings();
-		private GameLogic m_gameLogic;
+		private FormGame m_FormGame;
+		private GameLogic m_Game;
 
 		public GameUI()
 		{
-			Start();
+			Run();
 		}
 
 		public FormGameSettings GameSettings
@@ -26,20 +27,57 @@ namespace CheckersUI
 			}
 		}
 
+		public FormGame FormGame
+		{
+			get
+			{
+				return m_FormGame;
+			}
+		}
+
 		public GameLogic GameLogic
 		{
 			get
 			{
-				return m_gameLogic;
+				return m_Game;
 			}
 		}
 
-		private void Start()
+		public void Run()
 		{
-			Application.EnableVisualStyles();
-			m_gameSettings.ShowDialog();
+			bool ifFirstGame = true;
+			bool isStillPlaying = true;
+
+			GameSettings.ShowDialog();
+			startGame(ifFirstGame);
+			//TODO
+		}
+
+		private void startGame(bool i_IsFirstGame)
+		{
 			createGameInfo();
-			new FormGame().ShowDialog();
+			m_FormGame = new FormGame(GameSettings.BoardSize, GameLogic.CurrentPlayer, GameLogic.WaitingPlayer);
+			FormGame.ShowDialog();
+
+			/*while (!gameOver())
+			{
+				if (GameLogic.LastMove != null)
+				{
+					Console.WriteLine(string.Format("{0}'s move was ({1}): {2}", GameLogic.LastPlayerName, (char)GameLogic.LastSignPlayerPlayed, GameLogic.LastMove));
+				}
+
+				Console.WriteLine(string.Format("It's {0}'s Turn ({1})", GameLogic.CurrentPlayer.Name, (char)GameLogic.CurrentPlayer.PlayerColor));
+				//Game.LastMove = getAndRunAMove();
+				if (GameLogic.LastMove == "Q")//TODO quir from game
+				{
+					GameLogic.IsQuit = true;
+				}
+				else
+				{
+					//Change Board
+					GameLogic.SwitchPlayersAndCreateNewMoves();
+				}
+			}*/
 		}
 
 		private void createGameInfo()
@@ -57,7 +95,49 @@ namespace CheckersUI
 			player1 = new Player(Player.ePlayerType.Human, Square.ePlayerColor.White, GameSettings.NamePlayer1);
 			player2 = new Player(player2Type, Square.ePlayerColor.Black, GameSettings.NamePlayer2);
 			board = new Board((Board.eBoradSize)GameSettings.BoardSize);
-			m_gameLogic = new GameLogic(board, player1, player2);
+			m_Game = new GameLogic(board, player1, player2);
+		}
+
+		/*private string getAndRunAMove()
+		{
+			string errorMessage = string.Empty;
+			string move;
+
+			if (GameLogic.IsPcTurn())
+			{
+				move = GameLogic.GetAndRunPcMove();
+			}
+			else
+			{
+				//Get chosen square location
+
+				while (!GameLogic.IsValidMove(move, out errorMessage))
+				{
+					if (move == "Q")//If quit the game
+					{
+						break;
+					}
+
+					Console.WriteLine(string.Format(
+@"Invalid Move, please enter a valid move 
+{0}",
+errorMessage));
+					move = Console.ReadLine();
+				}
+			}
+
+			if (move != "Q")
+			{
+				GameLogic.CheckRewardKing();
+				GameLogic.RunMove(GameLogic.CurrentMove);
+			}
+
+			return move;
+		}*/
+
+		private bool gameOver()
+		{
+			return false;
 		}
 	}
 }
