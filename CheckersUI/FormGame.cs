@@ -18,6 +18,7 @@ namespace CheckersUI
 		//private SquareButton[,] m_ButtonsMatrix;
 		private MatrixButtons<SquareButton> m_ButtonsMatrix;
 		private GameLogic m_GameLogic;
+		private SquareButton m_FromSquareButton;
 
 		public MatrixButtons<SquareButton> ButtonMatrix
 		{
@@ -60,6 +61,8 @@ namespace CheckersUI
 					panelBoard.Controls.Add(squareButton);
 				}
 			}
+
+			m_FromSquareButton = m_ButtonsMatrix[0, 0];
 		}
 
 		private void SquareButton_Click(object sender, EventArgs e)
@@ -78,7 +81,17 @@ namespace CheckersUI
 			}
 			else
 			{
-
+				if (squareButtonChosen.BackColor == Color.LightBlue)
+				{
+					squareButtonChosen.BackColor = Color.White;
+				}
+				else 
+				{
+					m_FromSquareButton.BackColor = Color.White;
+					m_FromSquareButton = squareButtonChosen;
+					m_FromSquareButton.BackColor = Color.LightBlue;
+					//TODO: Check moves
+				}
 			}
 		}
 

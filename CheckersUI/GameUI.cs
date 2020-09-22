@@ -48,8 +48,10 @@ namespace CheckersUI
 			bool ifFirstGame = true;
 			bool isStillPlaying = true;
 
-			m_GameSettings.ShowDialog();
-			startGame(ifFirstGame);
+			if (m_GameSettings.ShowDialog() == DialogResult.OK)
+			{
+				startGame(ifFirstGame);
+			}
 			//TODO
 		}
 
