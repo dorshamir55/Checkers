@@ -132,7 +132,7 @@ namespace CheckersUI
 				if (m_GameLogic.IsNextPlayerTurn)
 				{
 					changeSquareButtonVisibility();
-					//Todo: 
+					//Todo: blue backColor when needed to eat
 					if (m_GameLogic.IsNeededToEat())
 					{
 						MessageBox.Show(string.Format("{0}, You must eat!", m_GameLogic.CurrentPlayer.Name));
