@@ -46,6 +46,7 @@ namespace CheckersUI
 		{
 			changeSquareButtonVisibility();
 			m_ButtonsMovesList = new List<SquareButton>();
+			m_GameLogic.GameBoard.SquareButtonValueChanged += GameBoard_SquareButtonValueChanged;
 		}
 
 		private void initializeNameAndScores(Player i_Player1, Player i_Player2)
@@ -74,48 +75,18 @@ namespace CheckersUI
 				}
 			}
 
-			m_FromSquareButton = ButtonMatrix[1,0];
+			m_FromSquareButton = ButtonMatrix[1, 0];
 		}
 
 		private void SquareButton_Click(object sender, EventArgs e)
 		{
-			string blank, move;
 			SquareButton squareButtonChosen = sender as SquareButton;
 
-			blank = string.Empty;
 			if (squareButtonChosen.Text.Equals(""))
 			{
-				if (squareButtonChosen.CanMoveHere(m_ButtonsMovesList))
+				if (squareButtonChosen.CanMoveTo(m_ButtonsMovesList))
 				{
-					move = string.Format("{0}{1}>{2}{3}",
-						(char)(m_FromSquareButton.Row + 'A'),
-						(char)(m_FromSquareButton.Col + 'a'),
-						(char)(squareButtonChosen.Row + 'A'),
-						(char)(squareButtonChosen.Col + 'a'));
-
-					if (m_GameLogic.IsValidMove(move, out blank))
-					{
-						MessageBox.Show("Update board");
-						m_GameLogic.CheckRewardKing();
-						m_GameLogic.GameBoard.SquareButtonValueChanged += GameBoard_SquareButtonValueChanged;
-						m_GameLogic.RunMove(m_GameLogic.CurrentMove);
-						changeButtonsMoveToWhite();
-						//TODO: UpdateBoard...
-						m_GameLogic.SwitchPlayersAndCreateNewMoves();
-						if (m_GameLogic.IsNextPlayerTurn)
-						{
-							changeSquareButtonVisibility();
-						}
-						else
-						{
-							m_FromSquareButton = squareButtonChosen;
-							m_FromSquareButton.BackColor = Color.LightBlue;
-						}
-						//m_ButtonsMovesList.Clear();
-						//m_FromSquareButton = squareButtonChosen;
-						//TODO: if eaten, Check for other skippings moves.
-						//TODO: check for switch player.
-					}
+					performMove(ref squareButtonChosen);
 				}
 				else
 				{
@@ -126,16 +97,81 @@ namespace CheckersUI
 			{
 				if (squareButtonChosen.IsPressed(m_FromSquareButton))
 				{
-					squareButtonChosen.BackColor = Color.Beige;
-					changeButtonsMoveToWhite();
-					m_ButtonsMovesList.Clear();
+					performWhenSquarePressed(ref squareButtonChosen);
 				}
 				else
 				{
-					m_FromSquareButton.BackColor = Color.Beige;
-					UpdateSelectedSquareButton(ref squareButtonChosen);
+					performWhenSquareUnpressed(ref squareButtonChosen);
 				}
 			}
+		}
+
+		private void performWhenSquareUnpressed(ref SquareButton squareButtonChosen)
+		{
+			m_FromSquareButton.BackColor = Color.Beige;
+			UpdateSelectedSquareButton(ref squareButtonChosen);
+		}
+
+		private void performWhenSquarePressed(ref SquareButton squareButtonChosen)
+		{
+			squareButtonChosen.BackColor = Color.Beige;
+			changeButtonsMoveToWhite();
+			m_ButtonsMovesList.Clear();
+		}
+
+		private void performMove(ref SquareButton squareButtonChosen)
+		{
+			string blank, move;
+
+			blank = string.Empty;
+			move = getMove(squareButtonChosen);
+			if (m_GameLogic.IsValidMove(move, out blank))
+			{
+				runMove();
+				m_GameLogic.SwitchPlayersAndCreateNewMoves();
+				if (m_GameLogic.IsNextPlayerTurn)
+				{
+					changeSquareButtonVisibility();
+					//Todo: 
+					if (m_GameLogic.IsNeededToEat())
+					{
+						MessageBox.Show(string.Format("{0}, You must eat!", m_GameLogic.CurrentPlayer.Name));
+					}
+					//
+				}
+				else
+				{
+					prepareBoardForNextEat(ref squareButtonChosen);
+				}
+			}
+		}
+
+		private void runMove()
+		{
+			//MessageBox.Show("Update board");
+			m_GameLogic.CheckRewardKing();
+			m_GameLogic.RunMove(m_GameLogic.CurrentMove);
+			changeButtonsMoveToWhite();
+		}
+
+		private string getMove(SquareButton squareButtonChosen)
+		{
+			return string.Format("{0}{1}>{2}{3}",
+						(char)(m_FromSquareButton.Row + 'A'),
+						(char)(m_FromSquareButton.Col + 'a'),
+						(char)(squareButtonChosen.Row + 'A'),
+						(char)(squareButtonChosen.Col + 'a'));
+		}
+
+		private void prepareBoardForNextEat(ref SquareButton squareButtonChosen)
+		{
+			changeButtonsMoveToWhite();
+			m_FromSquareButton.BackColor = Color.Beige;
+			squareButtonChosen.BackColor = Color.LightBlue;
+			m_ButtonsMovesList.Clear();
+			createButtonsMovesList(ref squareButtonChosen, m_GameLogic.CurrentPlayer.PlayerSkippingMoves);
+			changeButtonsMoveToBlue();
+			m_FromSquareButton = squareButtonChosen;
 		}
 
 		private void UpdateSelectedSquareButton(ref SquareButton squareButtonChosen)
@@ -212,8 +248,6 @@ namespace CheckersUI
 
 		public void changeSquareButtonVisibility()
 		{
-			int newCol, boardSize = (int)m_GameLogic.GameBoard.Size;
-
 			foreach (Square square in m_GameLogic.CurrentPlayer.PlayerSquares)
 			{
 				ButtonMatrix[square.Col, square.Row].Enabled = true;

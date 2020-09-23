@@ -85,10 +85,10 @@ namespace CheckersUI
 
 		public bool IsPressed(SquareButton i_LastSquareButton)
 		{
-			return this == i_LastSquareButton;
+			return this == i_LastSquareButton && this.BackColor == Color.LightBlue;
 		}
 
-		public bool CanMoveHere(List<SquareButton> i_SquareButtonsMovesList)
+		public bool CanMoveTo(List<SquareButton> i_SquareButtonsMovesList)
 		{
 			bool canMove = false;
 
