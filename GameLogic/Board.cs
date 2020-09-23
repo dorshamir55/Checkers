@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace Ex02
 {
+    public delegate void SquareValueChanged<T>(T newSquareValue);
+
     public class Board
     {
         private readonly eBoradSize m_Size;
         private Square[,] m_BoardSquares;
+
+        public event SquareValueChanged<string> SquareButtonValueChanged;
 
         public Board(eBoradSize i_Size)
         {
@@ -94,8 +98,18 @@ namespace Ex02
 
             m_BoardSquares[i_LastMove.To.Col, i_LastMove.To.Row].SquareValue = i_LastMove.From.SquareValue;
             m_BoardSquares[i_LastMove.To.Col, i_LastMove.To.Row].MyKingSign = i_LastMove.From.MyKingSign;
+            onSquareButtonValueChanged(((char)i_LastMove.From.SquareValue).ToString());
             m_BoardSquares[i_LastMove.From.Col, i_LastMove.From.Row].SquareValue = Square.ePlayerColor.Blank;
             m_BoardSquares[i_LastMove.From.Col, i_LastMove.From.Row].MyKingSign = Square.ePlayerColor.Blank;
+        }
+
+        protected virtual void onSquareButtonValueChanged(string newSquareValue)
+        {
+            //Console.Clear();
+            if (SquareButtonValueChanged != null)
+            {
+                SquareButtonValueChanged.Invoke(newSquareValue);
+            }
         }
     }
 }

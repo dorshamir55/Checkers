@@ -13,12 +13,12 @@
 		{
 			get
 			{
-				return m_TButtonsMatrix[col, row];
+				return m_TButtonsMatrix[row, col];
 			}
 
 			set
 			{
-				m_TButtonsMatrix[col, row] = value;
+				m_TButtonsMatrix[row, col] = value;
 			}
 		}
 	}

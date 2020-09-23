@@ -206,7 +206,7 @@ namespace Ex02
             o_ErrorMessage = string.Empty;
 
             move = Move.Parse(i_StringMove, m_GameBoard);
-            if (isNeededToEat())
+            if (IsNeededToEat())
             {
                 isValidMove = isSkipMove(move);
                 if (!isValidMove)
@@ -272,7 +272,7 @@ namespace Ex02
                 m_WaitingPlayer.UpdateEatenPlayerSquaresList(i_Move);
                 m_GameBoard.Update(i_Move);
                 m_CurrentPlayer.PlayerSkippingMoves = m_CurrentPlayer.CreateMovesSkippingTwiceLists(m_GameBoard, m_CurrentMove.To);
-                if (isNeededToEat())
+                if (IsNeededToEat())
                 {
                     m_IsNeededToEatAgain = true;
                 }
@@ -288,14 +288,19 @@ namespace Ex02
             } 
         }
 
-        private bool areMoreSkipMoves()
+        public bool areMoreSkipMoves()
         {
             return m_IsNeededToEatAgain;
         }
 
-        private bool isNeededToEat()
+        public bool IsNeededToEat()
         {
             return m_CurrentPlayer.PlayerSkippingMoves.Count > 0;
+        }
+
+        public bool ThereIsRegularMoves()
+        {
+            return m_CurrentPlayer.PlayerRegularMoves.Count > 0;
         }
 
         public void SwitchPlayersAndCreateNewMoves()

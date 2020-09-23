@@ -56,26 +56,67 @@ namespace CheckersUI
 		{
 			if (i_Row % 2 == 0 && i_Col % 2 == 0 || i_Row % 2 != 0 && i_Col % 2 != 0)
 			{
-				this.BackColor = Color.DarkGray;
+				this.BackColor = Color.Brown;
 				this.Enabled = false;
 			}
 			else
 			{
 				this.BackColor = Color.Beige;
-				this.Enabled = true;
 				if (i_Col < (i_BoardSize / 2) - 1)
 				{
+					this.Enabled = false;
 					this.Text = ((char)Square.ePlayerColor.White).ToString();// "O";
 				}
 				else if (i_Col > i_BoardSize / 2)
 				{
+					this.Enabled = false;
 					this.Text = ((char)Square.ePlayerColor.Black).ToString();// "X";
+				}
+				else
+				{
+					this.Enabled = true;
 				}
 			}
 
 			this.Margin = Padding.Empty;
 			this.Font = new Font(this.Font, FontStyle.Bold);
 			this.Location = new Point(this.Width * i_Row, this.Height * i_Col);
+		}
+
+		public bool IsPressed(SquareButton i_LastSquareButton)
+		{
+			return this == i_LastSquareButton;
+		}
+
+		public bool CanMoveHere(List<SquareButton> i_SquareButtonsMovesList)
+		{
+			bool canMove = false;
+
+			foreach (SquareButton squareButtonTo in i_SquareButtonsMovesList)
+			{
+				if (this.Row == squareButtonTo.Row && this.Col == squareButtonTo.Col)
+				{
+					canMove = true;
+					break;
+				}
+			}
+
+			return canMove;
+		}
+
+		public static bool operator ==(SquareButton i_SquareButtonA, SquareButton i_SquareButtonB)
+		{
+			return i_SquareButtonA.Col == i_SquareButtonB.Col && i_SquareButtonA.Row == i_SquareButtonB.Row;
+		}
+
+		public static bool operator !=(SquareButton i_SquareButtonA, SquareButton i_SquareButtonB)
+		{
+			return !(i_SquareButtonA == i_SquareButtonB);
+		}
+
+		public override bool Equals(object obj)
+		{
+			return base.Equals(obj);
 		}
 	}
 }

@@ -58,10 +58,10 @@ namespace CheckersUI
 		private void startGame(bool i_IsFirstGame)
 		{
 			createGameInfo();
-			m_FormGame = new FormGame(m_GameLogic);
 			//m_FormGame.PlayGame(m_GameLogic, m_GameSettings);
 			m_GameLogic.CalculatePlayerMoves();
-			//changeSquareButtonVisibility();
+			m_FormGame = new FormGame(m_GameLogic);
+			//m_FormGame.changeSquareButtonVisibility();
 			m_FormGame.ShowDialog();
 
 			while (!gameOver())
@@ -77,19 +77,6 @@ namespace CheckersUI
 					//Change Board
 					m_GameLogic.SwitchPlayersAndCreateNewMoves();
 				}
-			}
-		}
-
-		private void changeSquareButtonVisibility()
-		{
-			foreach (Square square in m_GameLogic.CurrentPlayer.PlayerSquares)
-			{
-				m_FormGame.ButtonMatrix[square.Col, square.Row].Enabled = true;
-			}
-
-			foreach (Square square in m_GameLogic.WaitingPlayer.PlayerSquares)
-			{
-				m_FormGame.ButtonMatrix[square.Col, square.Row].Enabled = false;
 			}
 		}
 
