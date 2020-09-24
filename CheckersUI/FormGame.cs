@@ -47,6 +47,10 @@ namespace CheckersUI
 			changeSquareButtonVisibility();
 			m_ButtonsMovesList = new List<SquareButton>();
 			m_GameLogic.GameBoard.SquareButtonValueChanged += GameBoard_SquareButtonValueChanged;
+			if (m_GameLogic.CurrentPlayer.IsComputer())
+			{
+				//TODO:
+			}
 		}
 
 		private void initializeNameAndScores(Player i_Player1, Player i_Player2)
@@ -121,9 +125,8 @@ namespace CheckersUI
 
 		private void performMove(ref SquareButton squareButtonChosen)
 		{
-			string blank, move;
+			string blank, move = string.Empty;
 
-			blank = string.Empty;
 			move = getMove(squareButtonChosen);
 			if (m_GameLogic.IsValidMove(move, out blank))
 			{
@@ -131,19 +134,44 @@ namespace CheckersUI
 				m_GameLogic.SwitchPlayersAndCreateNewMoves();
 				if (m_GameLogic.IsNextPlayerTurn)
 				{
-					changeSquareButtonVisibility();
-					//Todo: blue backColor when needed to eat
-					if (m_GameLogic.IsNeededToEat())
+					if (m_GameLogic.IsPcTurn())
 					{
-						MessageBox.Show(string.Format("{0}, You must eat!", m_GameLogic.CurrentPlayer.Name));
+						m_GameLogic.GetAndRunPcMove();
+						m_FromSquareButton = ButtonMatrix[m_GameLogic.CurrentMove.From.Col, m_GameLogic.CurrentMove.From.Row];
+						runAndUpdatePcMove(ref squareButtonChosen);
+						while (m_GameLogic.IsPcTurn())
+						{
+							m_GameLogic.GetAndRunPcMove();
+							m_FromSquareButton = squareButtonChosen;
+							runAndUpdatePcMove(ref squareButtonChosen);
+						}
 					}
-					//
+					else
+					{
+						changeSquareButtonVisibility();
+						/*if (m_GameLogic.IsNeededToEat())
+						{
+							MessageBox.Show(string.Format("{0}, You must eat!", m_GameLogic.CurrentPlayer.Name));
+							//Todo: blue backColor when needed to eat
+						}*/
+					}
 				}
 				else
 				{
 					prepareBoardForNextEat(ref squareButtonChosen);
 				}
 			}
+		}
+
+		private void runAndUpdatePcMove(ref SquareButton squareButtonChosen)
+		{
+			squareButtonChosen = ButtonMatrix[m_GameLogic.CurrentMove.To.Col, m_GameLogic.CurrentMove.To.Row];
+			squareButtonChosen.Enabled = false;
+			m_FromSquareButton.Enabled = true;
+			m_GameLogic.CheckRewardKing();
+			m_GameLogic.RunMove(m_GameLogic.CurrentMove);
+			m_ButtonsMovesList.Clear();
+			m_GameLogic.SwitchPlayersAndCreateNewMoves();
 		}
 
 		private void runMove()
