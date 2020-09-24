@@ -59,7 +59,7 @@
 			this.panelBoard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.panelBoard.BackColor = System.Drawing.SystemColors.Desktop;
+			this.panelBoard.BackColor = System.Drawing.SystemColors.Control;
 			this.panelBoard.Location = new System.Drawing.Point(15, 42);
 			this.panelBoard.Margin = new System.Windows.Forms.Padding(0);
 			this.panelBoard.Name = "panelBoard";

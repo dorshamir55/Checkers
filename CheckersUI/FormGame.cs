@@ -38,19 +38,28 @@ namespace CheckersUI
 			m_GameLogic = i_GameLogic;
 			this.BackColor = Color.SandyBrown;
 			initializeBoard((int)i_GameLogic.GameBoard.Size);
+			m_GameLogic.GameBoard.BoardValueChanged += GameBoard_BoardValueChanged;
 			initializeNameAndScores(i_GameLogic.CurrentPlayer, i_GameLogic.WaitingPlayer);
 			initializeGame();
 		}
 
 		private void initializeGame()
 		{
+			Point point;
+			SquareButton squareButtonChosen;
+			Move firstPcMove = m_GameLogic.CurrentPlayer.GetPCMove((int)m_GameLogic.GameBoard.Size);
+
+			point = new Point(firstPcMove.To.Col, firstPcMove.To.Row);
+			squareButtonChosen = new SquareButton(point);
 			changeSquareButtonVisibility();
 			m_ButtonsMovesList = new List<SquareButton>();
-			m_GameLogic.GameBoard.SquareButtonValueChanged += GameBoard_SquareButtonValueChanged;
+			
+			//Check if work:
 			if (m_GameLogic.CurrentPlayer.IsComputer())
 			{
-				//TODO:
+				runPcTurn(ref squareButtonChosen);
 			}
+			//
 		}
 
 		private void initializeNameAndScores(Player i_Player1, Player i_Player2)
@@ -136,15 +145,7 @@ namespace CheckersUI
 				{
 					if (m_GameLogic.IsPcTurn())
 					{
-						m_GameLogic.GetAndRunPcMove();
-						m_FromSquareButton = ButtonMatrix[m_GameLogic.CurrentMove.From.Col, m_GameLogic.CurrentMove.From.Row];
-						runAndUpdatePcMove(ref squareButtonChosen);
-						while (m_GameLogic.IsPcTurn())
-						{
-							m_GameLogic.GetAndRunPcMove();
-							m_FromSquareButton = squareButtonChosen;
-							runAndUpdatePcMove(ref squareButtonChosen);
-						}
+						runPcTurn(ref squareButtonChosen);
 					}
 					else
 					{
@@ -160,6 +161,19 @@ namespace CheckersUI
 				{
 					prepareBoardForNextEat(ref squareButtonChosen);
 				}
+			}
+		}
+
+		private void runPcTurn(ref SquareButton squareButtonChosen)
+		{
+			m_GameLogic.GetAndRunPcMove();
+			m_FromSquareButton = ButtonMatrix[m_GameLogic.CurrentMove.From.Col, m_GameLogic.CurrentMove.From.Row];
+			runAndUpdatePcMove(ref squareButtonChosen);
+			while (m_GameLogic.IsPcTurn())
+			{
+				m_GameLogic.GetAndRunPcMove();
+				m_FromSquareButton = squareButtonChosen;
+				runAndUpdatePcMove(ref squareButtonChosen);
 			}
 		}
 
@@ -221,7 +235,7 @@ namespace CheckersUI
 			m_FromSquareButton = squareButtonChosen;
 		}
 
-		private void GameBoard_SquareButtonValueChanged(string newSquareValue)
+		private void GameBoard_BoardValueChanged(string newSquareValue)
 		{
 			if (m_GameLogic.CurrentMove.IsSkipMove)
 			{
