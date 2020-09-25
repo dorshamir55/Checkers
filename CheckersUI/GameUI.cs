@@ -45,42 +45,29 @@ namespace CheckersUI
 
 		public void Run()
 		{
-			bool ifFirstGame = true;
-			bool isStillPlaying = true;
-
 			if (m_GameSettings.ShowDialog() == DialogResult.OK)
 			{
-				startGame(ifFirstGame);
+				startGame();
 			}
 			//TODO
 		}
 
-		private void startGame(bool i_IsFirstGame)
+		private void startGame()
 		{
-			createGameInfo();
+			createGameInfo(true);
 			//m_FormGame.PlayGame(m_GameLogic, m_GameSettings);
 			m_GameLogic.CalculatePlayerMoves();
 			m_FormGame = new FormGame(m_GameLogic);
 			//m_FormGame.changeSquareButtonVisibility();
-			m_FormGame.ShowDialog();
-
-			while (!gameOver())
+			while (m_FormGame.ShowDialog() == DialogResult.OK)
 			{
-				//change visibility of squareButtons
-				//Game.LastMove = getAndRunAMove();
-				if (m_GameLogic.LastMove == "Q")//TODO quit from game
-				{
-					m_GameLogic.IsQuit = true;
-				}
-				else
-				{
-					//Change Board
-					m_GameLogic.SwitchPlayersAndCreateNewMoves();
-				}
+				createGameInfo(false);
+				m_GameLogic.CalculatePlayerMoves();
+				m_FormGame = new FormGame(m_GameLogic);
 			}
 		}
 
-		private void createGameInfo()
+		private void createGameInfo(bool i_IsFirstGame)
 		{
 			Player player1, player2;
 			Board board;
@@ -92,9 +79,19 @@ namespace CheckersUI
 				player2Type = Player.ePlayerType.Computer;
 			}
 
-			player1 = new Player(Player.ePlayerType.Human, Square.ePlayerColor.White, m_GameSettings.NamePlayer1);
-			player2 = new Player(player2Type, Square.ePlayerColor.Black, m_GameSettings.NamePlayer2);
-			board = new Board((Board.eBoradSize)m_GameSettings.BoardSize);
+			if (i_IsFirstGame)
+			{
+				player1 = new Player(Player.ePlayerType.Human, Square.ePlayerColor.White, m_GameSettings.NamePlayer1);
+				player2 = new Player(player2Type, Square.ePlayerColor.Black, m_GameSettings.NamePlayer2);
+				board = new Board((Board.eBoradSize)m_GameSettings.BoardSize);
+			}
+			else
+			{
+				player1 = new Player(m_GameLogic.CurrentPlayer.PlayerType, m_GameLogic.CurrentPlayer.PlayerColor, m_GameLogic.CurrentPlayer.Name, m_GameLogic.CurrentPlayer.Score);
+				player2 = new Player(m_GameLogic.WaitingPlayer.PlayerType, m_GameLogic.WaitingPlayer.PlayerColor, m_GameLogic.WaitingPlayer.Name, m_GameLogic.WaitingPlayer.Score);
+				board = new Board(m_GameLogic.GameBoard.Size);
+			}
+
 			m_GameLogic = new GameLogic(board, player1, player2);
 		}
 
