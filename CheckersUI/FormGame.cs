@@ -50,12 +50,7 @@ namespace CheckersUI
 
 			point = new Point(firstPcMove.To.Col, firstPcMove.To.Row);
 			squareButtonChosen = new SquareButton(point);
-			changeSquareButtonVisibility();
-			//TODO......
-			if (m_GameLogic.CurrentPlayer.IsComputer())
-			{
-				changeSquareButtonVisibility();
-			}
+			switchSquareButtonVisibility(m_GameLogic.CurrentPlayer.IsComputer());
 			m_ButtonsMovesList = new List<SquareButton>();
 			
 			//Check if work:
@@ -107,7 +102,14 @@ namespace CheckersUI
 				}
 				else
 				{
-					MessageBox.Show("Invalid move!");
+					if (m_GameLogic.IsNeededToEat())
+					{
+						MessageBox.Show("You must eat!");
+					}
+					else
+					{
+						MessageBox.Show("Invalid move!");
+					}
 				}
 			}
 			else
@@ -153,7 +155,7 @@ namespace CheckersUI
 					}
 					else
 					{
-						changeSquareButtonVisibility();
+						switchSquareButtonVisibility(m_GameLogic.CurrentPlayer.IsComputer());
 						/*if (m_GameLogic.IsNeededToEat())
 						{
 							MessageBox.Show(string.Format("{0}, You must eat!", m_GameLogic.CurrentPlayer.Name));
@@ -338,16 +340,16 @@ question);
 			return squareButton;
 		}
 
-		public void changeSquareButtonVisibility()
+		public void switchSquareButtonVisibility(bool i_IsComputer)
 		{
 			foreach (Square square in m_GameLogic.CurrentPlayer.PlayerSquares)
 			{
-				ButtonMatrix[square.Col, square.Row].Enabled = true;
+				ButtonMatrix[square.Col, square.Row].Enabled = !i_IsComputer;
 			}
 
 			foreach (Square square in m_GameLogic.WaitingPlayer.PlayerSquares)
 			{
-				ButtonMatrix[square.Col, square.Row].Enabled = false;
+				ButtonMatrix[square.Col, square.Row].Enabled = i_IsComputer;
 			}
 		}
 	}
