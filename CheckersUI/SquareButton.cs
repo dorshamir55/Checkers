@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 using Ex02;
 
 namespace CheckersUI
@@ -65,12 +66,16 @@ namespace CheckersUI
 				if (i_Col < (i_BoardSize / 2) - 1)
 				{
 					this.Enabled = false;
-					this.Text = ((char)Square.ePlayerColor.White).ToString();// "O";
+					//this.Text = ((char)Square.ePlayerColor.White).ToString();// "O";
+					this.BackgroundImage = CheckersUI.Properties.Resources.white;
+					this.BackgroundImageLayout = ImageLayout.Center;
 				}
 				else if (i_Col > i_BoardSize / 2)
 				{
 					this.Enabled = false;
-					this.Text = ((char)Square.ePlayerColor.Black).ToString();// "X";
+					//this.Text = ((char)Square.ePlayerColor.Black).ToString();// "X";
+					this.BackgroundImage = CheckersUI.Properties.Resources.black;
+					this.BackgroundImageLayout = ImageLayout.Center;
 				}
 				else
 				{

@@ -73,6 +73,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -94,11 +95,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="pictures\black.gif" />
-    <Content Include="pictures\black_king.gif" />
-    <Content Include="pictures\checkers_icon.png" />
-    <Content Include="pictures\white.gif" />
-    <Content Include="pictures\white_king.gif" />
+    <None Include="Resources\white1.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\white2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\black.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\black_king.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\white.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\white_king.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
