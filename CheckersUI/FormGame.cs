@@ -35,7 +35,7 @@ namespace CheckersUI
 			InitializeComponent();
 
 			m_GameLogic = i_GameLogic;
-			this.BackColor = Color.SandyBrown;
+			//this.BackColor = Color.SandyBrown;
 			initializeBoard((int)i_GameLogic.GameBoard.Size);
 			m_GameLogic.GameBoard.BoardValueChanged += GameBoard_BoardValueChanged;
 			initializeNameAndScores(i_GameLogic.CurrentPlayer, i_GameLogic.WaitingPlayer);

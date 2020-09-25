@@ -93,5 +93,12 @@
       <Name>GameLogic</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="pictures\black.gif" />
+    <Content Include="pictures\black_king.gif" />
+    <Content Include="pictures\checkers_icon.png" />
+    <Content Include="pictures\white.gif" />
+    <Content Include="pictures\white_king.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

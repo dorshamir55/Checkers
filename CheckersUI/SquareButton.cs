@@ -56,7 +56,7 @@ namespace CheckersUI
 		{
 			if (i_Row % 2 == 0 && i_Col % 2 == 0 || i_Row % 2 != 0 && i_Col % 2 != 0)
 			{
-				this.BackColor = Color.Brown;
+				this.BackColor = Color.Black;
 				this.Enabled = false;
 			}
 			else
@@ -117,6 +117,11 @@ namespace CheckersUI
 		public override bool Equals(object obj)
 		{
 			return base.Equals(obj);
+		}
+
+		public override int GetHashCode()
+		{
+			return base.GetHashCode();
 		}
 	}
 }
