@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Ex02
 {
-	public class GameLogic
-	{
+    public class GameLogic
+    {
         private Board m_GameBoard;
         private Player m_CurrentPlayer;
         private Player m_WaitingPlayer;
@@ -17,7 +17,6 @@ namespace Ex02
         private bool m_IsQuit = false;
         private string m_LastPlayerName;
         private Square.ePlayerColor m_LastSignPlayerPlayed;
-        private string m_WinnerName = null;
         private bool m_isNeedToStopAfterRewardingKing = false;
         private bool m_IsNextPlayerTurn = true;
 
@@ -125,14 +124,6 @@ namespace Ex02
             }
         }
 
-        public string WinnerName
-        {
-            get 
-            {
-                return m_WinnerName;
-            }
-        }
-
         public bool IsNeedToStopAfterRewardingKing
         {
             get
@@ -160,8 +151,8 @@ namespace Ex02
         }
 
         public GameLogic(Board i_GameBoard, Player i_FirstPlayer, Player i_SecondPlayer)
-		{
-			m_GameBoard = i_GameBoard;
+        {
+            m_GameBoard = i_GameBoard;
             m_CurrentPlayer = i_FirstPlayer;
             m_WaitingPlayer = i_SecondPlayer;
 
@@ -261,11 +252,11 @@ namespace Ex02
 
         public void RunMove(Move i_Move)
         {
-/*            if (i_Move.From.IsRewardKing(i_Move.To, (int)GameBoard.Size))
-            {
-                i_Move.From.SquareValue = i_Move.From.MyKingSign;
-                i_Move.From.IsKing = true;
-            }*/
+            /*            if (i_Move.From.IsRewardKing(i_Move.To, (int)GameBoard.Size))
+                        {
+                            i_Move.From.SquareValue = i_Move.From.MyKingSign;
+                            i_Move.From.IsKing = true;
+                        }*/
             m_CurrentPlayer.UpdatePlayerSquaresList(ref i_Move);
             if (i_Move.IsSkipMove)
             {
@@ -285,7 +276,7 @@ namespace Ex02
             {
                 m_GameBoard.Update(i_Move);
                 m_IsNeededToEatAgain = false;
-            } 
+            }
         }
 
         public bool areMoreSkipMoves()
@@ -350,7 +341,7 @@ namespace Ex02
             return m_WaitingPlayer.PlayerRegularMoves.Count == 0 && m_WaitingPlayer.PlayerSkippingMoves.Count == 0;
         }
 
-        public void CalculatePlayersScoreAndWinnerName()
+        public void CalculatePlayersScore()
         {
             int currentPlayerScore, waitingPlayerScore;
 
@@ -359,12 +350,10 @@ namespace Ex02
             if (currentPlayerScore > waitingPlayerScore)
             {
                 m_CurrentPlayer.Score += currentPlayerScore - waitingPlayerScore;
-                m_WinnerName = m_CurrentPlayer.Name;
             }
             else if (waitingPlayerScore > currentPlayerScore)
             {
                 m_WaitingPlayer.Score += waitingPlayerScore - currentPlayerScore;
-                m_WinnerName = m_WaitingPlayer.Name;
             }
         }
 
@@ -376,6 +365,11 @@ namespace Ex02
                 m_CurrentMove.From.IsKing = true;
                 IsNeedToStopAfterRewardingKing = true;
             }
+        }
+
+        public bool IDontHaveMoves()
+        {
+            return !ThereIsRegularMoves() && !IsNeededToEat();
         }
     }
 }

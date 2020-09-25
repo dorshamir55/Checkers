@@ -17,7 +17,6 @@ namespace CheckersUI
 		private const int k_SquareSize = 40;
 		private const int k_MarginWidthSpace = 30;
 		private const int k_MarginHeightSpace = 15;
-		//private SquareButton[,] m_ButtonsMatrix;
 		private MatrixButtons<SquareButton> m_ButtonsMatrix;
 		private GameLogic m_GameLogic;
 		private SquareButton m_FromSquareButton;
@@ -52,6 +51,11 @@ namespace CheckersUI
 			point = new Point(firstPcMove.To.Col, firstPcMove.To.Row);
 			squareButtonChosen = new SquareButton(point);
 			changeSquareButtonVisibility();
+			//TODO......
+			if (m_GameLogic.CurrentPlayer.IsComputer())
+			{
+				changeSquareButtonVisibility();
+			}
 			m_ButtonsMovesList = new List<SquareButton>();
 			
 			//Check if work:
@@ -162,18 +166,23 @@ namespace CheckersUI
 					prepareBoardForNextEat(ref squareButtonChosen);
 				}
 			}
+
+			checkGameOver();
 		}
 
 		private void runPcTurn(ref SquareButton squareButtonChosen)
 		{
-			m_GameLogic.GetAndRunPcMove();
-			m_FromSquareButton = ButtonMatrix[m_GameLogic.CurrentMove.From.Col, m_GameLogic.CurrentMove.From.Row];
-			runAndUpdatePcMove(ref squareButtonChosen);
-			while (m_GameLogic.IsPcTurn())
+			if (!m_GameLogic.IDontHaveMoves())
 			{
 				m_GameLogic.GetAndRunPcMove();
-				m_FromSquareButton = squareButtonChosen;
+				m_FromSquareButton = ButtonMatrix[m_GameLogic.CurrentMove.From.Col, m_GameLogic.CurrentMove.From.Row];
 				runAndUpdatePcMove(ref squareButtonChosen);
+				while (m_GameLogic.IsPcTurn())
+				{
+					m_GameLogic.GetAndRunPcMove();
+					m_FromSquareButton = squareButtonChosen;
+					runAndUpdatePcMove(ref squareButtonChosen);
+				}
 			}
 		}
 
@@ -188,6 +197,47 @@ namespace CheckersUI
 			m_GameLogic.SwitchPlayersAndCreateNewMoves();
 		}
 
+		private void checkGameOver()
+		{
+			string resultOfGame = string.Empty;
+			const string question = "Another Round?";
+
+			if (m_GameLogic.IDontHaveMoves())
+			{
+				m_GameLogic.CalculatePlayersScore();
+				if (m_GameLogic.IsDraw())
+				{
+					resultOfGame = string.Format(@"Tie
+{0}",
+question);
+				}
+				else
+				{
+					resultOfGame = string.Format(@"{0} Won!
+{1}",
+m_GameLogic.WaitingPlayer.Name,
+question);
+				}
+
+				askForAnotherGame(resultOfGame);
+			}
+		}
+
+		private void askForAnotherGame(string i_ResultOfGame)
+		{
+			DialogResult dialogResult = MessageBox.Show(i_ResultOfGame, "Some Title", MessageBoxButtons.YesNo);
+			if (dialogResult == DialogResult.Yes)
+			{
+				this.DialogResult = DialogResult.OK;
+			}
+			else if (dialogResult == DialogResult.No)
+			{
+				this.DialogResult = DialogResult.Cancel;
+			}
+
+			this.Close();
+		}
+
 		private void runMove()
 		{
 			//MessageBox.Show("Update board");
@@ -196,46 +246,46 @@ namespace CheckersUI
 			changeButtonsMoveToWhite();
 		}
 
-		private string getMove(SquareButton squareButtonChosen)
+		private string getMove(SquareButton i_SquareButtonChosen)
 		{
 			return string.Format("{0}{1}>{2}{3}",
 						(char)(m_FromSquareButton.Row + 'A'),
 						(char)(m_FromSquareButton.Col + 'a'),
-						(char)(squareButtonChosen.Row + 'A'),
-						(char)(squareButtonChosen.Col + 'a'));
+						(char)(i_SquareButtonChosen.Row + 'A'),
+						(char)(i_SquareButtonChosen.Col + 'a'));
 		}
 
-		private void prepareBoardForNextEat(ref SquareButton squareButtonChosen)
+		private void prepareBoardForNextEat(ref SquareButton i_SquareButtonChosen)
 		{
 			changeButtonsMoveToWhite();
 			m_FromSquareButton.BackColor = Color.Beige;
-			squareButtonChosen.BackColor = Color.LightBlue;
+			i_SquareButtonChosen.BackColor = Color.LightBlue;
 			m_ButtonsMovesList.Clear();
-			createButtonsMovesList(ref squareButtonChosen, m_GameLogic.CurrentPlayer.PlayerSkippingMoves);
+			createButtonsMovesList(ref i_SquareButtonChosen, m_GameLogic.CurrentPlayer.PlayerSkippingMoves);
 			changeButtonsMoveToBlue();
-			m_FromSquareButton = squareButtonChosen;
+			m_FromSquareButton = i_SquareButtonChosen;
 		}
 
-		private void UpdateSelectedSquareButton(ref SquareButton squareButtonChosen)
+		private void UpdateSelectedSquareButton(ref SquareButton i_SquareButtonChosen)
 		{
 			changeButtonsMoveToWhite();
-			squareButtonChosen.BackColor = Color.LightBlue;
+			i_SquareButtonChosen.BackColor = Color.LightBlue;
 			if (m_GameLogic.IsNeededToEat())
 			{
 				m_ButtonsMovesList.Clear();
-				createButtonsMovesList(ref squareButtonChosen, m_GameLogic.CurrentPlayer.PlayerSkippingMoves);
+				createButtonsMovesList(ref i_SquareButtonChosen, m_GameLogic.CurrentPlayer.PlayerSkippingMoves);
 				changeButtonsMoveToBlue();
 			}
 			else if (m_GameLogic.ThereIsRegularMoves())
 			{
-				createButtonsMovesList(ref squareButtonChosen, m_GameLogic.CurrentPlayer.PlayerRegularMoves);
+				createButtonsMovesList(ref i_SquareButtonChosen, m_GameLogic.CurrentPlayer.PlayerRegularMoves);
 				changeButtonsMoveToBlue();
 			}
 
-			m_FromSquareButton = squareButtonChosen;
+			m_FromSquareButton = i_SquareButtonChosen;
 		}
 
-		private void GameBoard_BoardValueChanged(string newSquareValue)
+		private void GameBoard_BoardValueChanged(string i_NewSquareValue)
 		{
 			if (m_GameLogic.CurrentMove.IsSkipMove)
 			{
@@ -245,7 +295,7 @@ namespace CheckersUI
 
 			m_FromSquareButton.Text = "";
 			m_FromSquareButton.BackColor = Color.Beige;
-			ButtonMatrix[m_GameLogic.CurrentMove.To.Col, m_GameLogic.CurrentMove.To.Row].Text = newSquareValue;
+			ButtonMatrix[m_GameLogic.CurrentMove.To.Col, m_GameLogic.CurrentMove.To.Row].Text = i_NewSquareValue;
 		}
 
 		private void changeButtonsMoveToBlue()

@@ -204,22 +204,12 @@ namespace Ex02
                 randomIndex = random.Next(m_PlayerSkippingMoves.Count);
                 pcMove = m_PlayerSkippingMoves[randomIndex];
                 pcMove.IsSkipMove = true;
-/*                if (pcMove.From.IsRewardKing(pcMove.To, i_Size))
-                {
-                    pcMove.From.SquareValue = pcMove.From.MyKingSign;
-                    pcMove.From.IsKing = true;
-                }*/
             }
             else if (m_PlayerRegularMoves.Count != 0)
             {
                 randomIndex = random.Next(m_PlayerRegularMoves.Count);
                 pcMove = m_PlayerRegularMoves[randomIndex];
                 pcMove.IsSkipMove = false;
-/*                if (pcMove.From.IsRewardKing(pcMove.To, i_Size))
-                {
-                    pcMove.From.SquareValue = pcMove.From.MyKingSign;
-                    pcMove.From.IsKing = true;
-                }*/
             }
 
             return pcMove;
