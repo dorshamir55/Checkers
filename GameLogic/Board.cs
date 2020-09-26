@@ -13,7 +13,7 @@ namespace Ex02
         private readonly eBoradSize m_Size;
         private Square[,] m_BoardSquares;
 
-        public event BoardChanged<string> BoardValueChanged;
+        public event BoardChanged<char> BoardValueChanged;
 
         public Board(eBoradSize i_Size)
         {
@@ -98,12 +98,12 @@ namespace Ex02
 
             m_BoardSquares[i_LastMove.To.Col, i_LastMove.To.Row].SquareValue = i_LastMove.From.SquareValue;
             m_BoardSquares[i_LastMove.To.Col, i_LastMove.To.Row].MyKingSign = i_LastMove.From.MyKingSign;
-            onBoardValueChanged(((char)i_LastMove.From.SquareValue).ToString());
+            onBoardValueChanged((char)i_LastMove.From.SquareValue);
             m_BoardSquares[i_LastMove.From.Col, i_LastMove.From.Row].SquareValue = Square.ePlayerColor.Blank;
             m_BoardSquares[i_LastMove.From.Col, i_LastMove.From.Row].MyKingSign = Square.ePlayerColor.Blank;
         }
 
-        protected virtual void onBoardValueChanged(string newSquareValue)
+        protected virtual void onBoardValueChanged(char newSquareValue)
         {
             //Console.Clear();
             if (BoardValueChanged != null)

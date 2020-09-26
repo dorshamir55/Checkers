@@ -94,7 +94,7 @@ namespace CheckersUI
 		{
 			SquareButton squareButtonChosen = sender as SquareButton;
 
-			if (squareButtonChosen.Text.Equals(""))
+			if (squareButtonChosen.BackgroundImage == null)
 			{
 				if (squareButtonChosen.CanMoveTo(m_ButtonsMovesList))
 				{
@@ -287,17 +287,46 @@ question);
 			m_FromSquareButton = i_SquareButtonChosen;
 		}
 
-		private void GameBoard_BoardValueChanged(string i_NewSquareValue)
+		private void GameBoard_BoardValueChanged(char i_NewSquareValue)
 		{
+			Image image = null;
+
+			image = getSquareValueImage(ref image, i_NewSquareValue);
+			
 			if (m_GameLogic.CurrentMove.IsSkipMove)
 			{
-				ButtonMatrix[m_GameLogic.CurrentMove.Eaten.Col, m_GameLogic.CurrentMove.Eaten.Row].Text = "";
+				ButtonMatrix[m_GameLogic.CurrentMove.Eaten.Col, m_GameLogic.CurrentMove.Eaten.Row].BackgroundImage = null;
 				ButtonMatrix[m_GameLogic.CurrentMove.Eaten.Col, m_GameLogic.CurrentMove.Eaten.Row].Enabled = true;
 			}
 
-			m_FromSquareButton.Text = "";
+			m_FromSquareButton.BackgroundImage = null;
 			m_FromSquareButton.BackColor = Color.Beige;
-			ButtonMatrix[m_GameLogic.CurrentMove.To.Col, m_GameLogic.CurrentMove.To.Row].Text = i_NewSquareValue;
+			ButtonMatrix[m_GameLogic.CurrentMove.To.Col, m_GameLogic.CurrentMove.To.Row].BackgroundImage = image;
+			ButtonMatrix[m_GameLogic.CurrentMove.To.Col, m_GameLogic.CurrentMove.To.Row].BackgroundImageLayout = ImageLayout.Center;
+		}
+
+		private Image getSquareValueImage(ref Image image, char i_NewSquareValue)
+		{
+			switch (i_NewSquareValue)
+			{
+				case (char)Square.ePlayerColor.White:
+					image = CheckersUI.Properties.Resources.white;
+					break;
+
+				case (char)Square.ePlayerColor.Black:
+					image = CheckersUI.Properties.Resources.black;
+					break;
+
+				case (char)Square.ePlayerColor.WhiteKing:
+					image = CheckersUI.Properties.Resources.white_king;
+					break;
+
+				case (char)Square.ePlayerColor.BlackKing:
+					image = CheckersUI.Properties.Resources.black_king;
+					break;
+			}
+
+			return image;
 		}
 
 		private void changeButtonsMoveToBlue()

@@ -67,15 +67,13 @@ namespace CheckersUI
 				{
 					this.Enabled = false;
 					//this.Text = ((char)Square.ePlayerColor.White).ToString();// "O";
-					this.BackgroundImage = CheckersUI.Properties.Resources.white;
-					this.BackgroundImageLayout = ImageLayout.Center;
+					changeSquareToWhite();
 				}
 				else if (i_Col > i_BoardSize / 2)
 				{
 					this.Enabled = false;
 					//this.Text = ((char)Square.ePlayerColor.Black).ToString();// "X";
-					this.BackgroundImage = CheckersUI.Properties.Resources.black;
-					this.BackgroundImageLayout = ImageLayout.Center;
+					changeSquareToBlack();
 				}
 				else
 				{
@@ -127,6 +125,18 @@ namespace CheckersUI
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
+		}
+
+		public void changeSquareToWhite()
+		{
+			this.BackgroundImage = CheckersUI.Properties.Resources.white;
+			this.BackgroundImageLayout = ImageLayout.Center;
+		}
+
+		public void changeSquareToBlack()
+		{
+			this.BackgroundImage = CheckersUI.Properties.Resources.black;
+			this.BackgroundImageLayout = ImageLayout.Center;
 		}
 	}
 }
