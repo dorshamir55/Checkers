@@ -69,6 +69,7 @@ namespace CheckersUI
 			labelPlayer2Score.Text = string.Format("{0}: {1}",
 			i_Player2.Name,
 			i_Player2.Score);
+			labelPlayer1Score.BackColor = Color.LightBlue;
 		}
 
 		private void initializeBoard(int i_BoardSize)
