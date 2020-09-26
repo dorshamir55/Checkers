@@ -112,5 +112,14 @@
   <ItemGroup>
     <None Include="Resources\white_king.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dice.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dice_trolling.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\checkers_icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

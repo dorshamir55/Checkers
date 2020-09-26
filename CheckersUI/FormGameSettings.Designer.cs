@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormGameSettings));
 			this.labelBoardSize = new System.Windows.Forms.Label();
 			this.radioButton1 = new System.Windows.Forms.RadioButton();
 			this.radioButton2 = new System.Windows.Forms.RadioButton();
@@ -132,7 +133,7 @@
 			this.buttonDone.Text = "Done";
 			this.buttonDone.UseVisualStyleBackColor = true;
 			// 
-			// formGameSettings
+			// FormGameSettings
 			// 
 			this.AcceptButton = this.buttonDone;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -148,12 +149,13 @@
 			this.Controls.Add(this.labelPlayer1);
 			this.Controls.Add(this.labelPlayers);
 			this.Controls.Add(this.labelBoardSize);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.MaximumSize = new System.Drawing.Size(220, 200);
 			this.MinimizeBox = false;
 			this.MinimumSize = new System.Drawing.Size(220, 200);
-			this.Name = "formGameSettings";
+			this.Name = "FormGameSettings";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Game settigns";
 			this.ResumeLayout(false);

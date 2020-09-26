@@ -81,11 +81,15 @@ namespace CheckersUI
 			{
 				labelPlayer2Score.BackColor = Color.LightBlue;
 				labelPlayer1Score.BackColor = Color.Transparent;
+				pictureBoxDicePlayer2.Visible = true;
+				pictureBoxDicePlayer1.Visible = false;
 			}
 			else
 			{
 				labelPlayer1Score.BackColor = Color.LightBlue;
 				labelPlayer2Score.BackColor = Color.Transparent;
+				pictureBoxDicePlayer1.Visible = true;
+				pictureBoxDicePlayer2.Visible = false;
 			}
 		}
 
@@ -122,11 +126,11 @@ namespace CheckersUI
 				{
 					if (m_GameLogic.IsNeededToEat())
 					{
-						MessageBox.Show("You must eat!");
+						MessageBox.Show("You must eat!", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					}
 					else
 					{
-						MessageBox.Show("Invalid move!");
+						MessageBox.Show("Invalid move!", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					}
 				}
 			}
@@ -246,7 +250,7 @@ question);
 
 		private void askForAnotherGame(string i_ResultOfGame)
 		{
-			DialogResult dialogResult = MessageBox.Show(i_ResultOfGame, "Some Title", MessageBoxButtons.YesNo);
+			DialogResult dialogResult = MessageBox.Show(i_ResultOfGame, "Game Over!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 			if (dialogResult == DialogResult.Yes)
 			{
 				this.DialogResult = DialogResult.OK;

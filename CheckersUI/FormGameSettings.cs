@@ -84,11 +84,11 @@ namespace CheckersUI
 		{
 			if (textBoxPlayer1.Text.Equals("") || textBoxPlayer2.Text.Equals(""))
 			{
-				MessageBox.Show("Player name can't be blank");
+				MessageBox.Show("Player name can't be blank", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 			else if (m_BoardSize == 0)
 			{
-				MessageBox.Show("Please choose size board");
+				MessageBox.Show("Please choose size board", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 			else
 			{

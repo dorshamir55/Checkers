@@ -28,9 +28,14 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormGame));
 			this.labelPlayer1Score = new System.Windows.Forms.Label();
 			this.labelPlayer2Score = new System.Windows.Forms.Label();
 			this.panelBoard = new System.Windows.Forms.Panel();
+			this.pictureBoxDicePlayer1 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxDicePlayer2 = new System.Windows.Forms.PictureBox();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDicePlayer1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDicePlayer2)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// labelPlayer1Score
@@ -49,7 +54,7 @@
 			this.labelPlayer2Score.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelPlayer2Score.AutoSize = true;
 			this.labelPlayer2Score.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-			this.labelPlayer2Score.Location = new System.Drawing.Point(229, 9);
+			this.labelPlayer2Score.Location = new System.Drawing.Point(230, 9);
 			this.labelPlayer2Score.Name = "labelPlayer2Score";
 			this.labelPlayer2Score.Size = new System.Drawing.Size(93, 17);
 			this.labelPlayer2Score.TabIndex = 0;
@@ -60,26 +65,53 @@
 			this.panelBoard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.panelBoard.BackColor = System.Drawing.SystemColors.Control;
+			this.panelBoard.BackColor = System.Drawing.Color.Black;
 			this.panelBoard.Location = new System.Drawing.Point(15, 42);
 			this.panelBoard.Margin = new System.Windows.Forms.Padding(0);
 			this.panelBoard.Name = "panelBoard";
 			this.panelBoard.Size = new System.Drawing.Size(304, 304);
 			this.panelBoard.TabIndex = 1;
 			// 
+			// pictureBoxDicePlayer1
+			// 
+			this.pictureBoxDicePlayer1.BackgroundImage = global::CheckersUI.Properties.Resources.dice_trolling;
+			this.pictureBoxDicePlayer1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+			this.pictureBoxDicePlayer1.Location = new System.Drawing.Point(28, 5);
+			this.pictureBoxDicePlayer1.Name = "pictureBoxDicePlayer1";
+			this.pictureBoxDicePlayer1.Size = new System.Drawing.Size(26, 26);
+			this.pictureBoxDicePlayer1.TabIndex = 2;
+			this.pictureBoxDicePlayer1.TabStop = false;
+			// 
+			// pictureBoxDicePlayer2
+			// 
+			this.pictureBoxDicePlayer2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxDicePlayer2.BackgroundImage = global::CheckersUI.Properties.Resources.dice_trolling;
+			this.pictureBoxDicePlayer2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+			this.pictureBoxDicePlayer2.Location = new System.Drawing.Point(198, 5);
+			this.pictureBoxDicePlayer2.Name = "pictureBoxDicePlayer2";
+			this.pictureBoxDicePlayer2.Size = new System.Drawing.Size(26, 26);
+			this.pictureBoxDicePlayer2.TabIndex = 2;
+			this.pictureBoxDicePlayer2.TabStop = false;
+			this.pictureBoxDicePlayer2.Visible = false;
+			// 
 			// FormGame
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(334, 361);
+			this.Controls.Add(this.pictureBoxDicePlayer1);
+			this.Controls.Add(this.pictureBoxDicePlayer2);
 			this.Controls.Add(this.panelBoard);
 			this.Controls.Add(this.labelPlayer2Score);
 			this.Controls.Add(this.labelPlayer1Score);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.Name = "FormGame";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Checkers";
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDicePlayer1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDicePlayer2)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -90,5 +122,7 @@
 		private System.Windows.Forms.Label labelPlayer1Score;
 		private System.Windows.Forms.Label labelPlayer2Score;
 		private System.Windows.Forms.Panel panelBoard;
+		private System.Windows.Forms.PictureBox pictureBoxDicePlayer2;
+		private System.Windows.Forms.PictureBox pictureBoxDicePlayer1;
 	}
 }

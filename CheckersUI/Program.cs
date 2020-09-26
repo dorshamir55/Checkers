@@ -13,10 +13,6 @@ namespace CheckersUI
 		{
 			Application.EnableVisualStyles();
 			new GameUI();
-			/*Application.EnableVisualStyles();
-			FormGameSettings gameSettings = new FormGameSettings();
-			gameSettings.ShowDialog();
-			new FormGame().ShowDialog();*/
 		}
 	}
 }
