@@ -69,7 +69,24 @@ namespace CheckersUI
 			labelPlayer2Score.Text = string.Format("{0}: {1}",
 			i_Player2.Name,
 			i_Player2.Score);
-			labelPlayer1Score.BackColor = Color.LightBlue;
+			if (m_GameLogic.CurrentPlayer.IsComputer())
+			{
+				changeTurnView();
+			}
+		}
+
+		private void changeTurnView()
+		{
+			if (labelPlayer1Score.BackColor == Color.LightBlue)
+			{
+				labelPlayer2Score.BackColor = Color.LightBlue;
+				labelPlayer1Score.BackColor = Color.Transparent;
+			}
+			else
+			{
+				labelPlayer1Score.BackColor = Color.LightBlue;
+				labelPlayer2Score.BackColor = Color.Transparent;
+			}
 		}
 
 		private void initializeBoard(int i_BoardSize)
@@ -156,6 +173,7 @@ namespace CheckersUI
 					}
 					else
 					{
+						changeTurnView();
 						switchSquareButtonVisibility(m_GameLogic.CurrentPlayer.IsComputer());
 						/*if (m_GameLogic.IsNeededToEat())
 						{
