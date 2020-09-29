@@ -11,7 +11,7 @@ namespace CheckersUI
 {
 	public partial class FormGameSettings : Form
 	{
-		private const int k_MaxNameSize = 12;
+		private const int k_MaxNameSize = 10;
 		private int m_BoardSize;
 
 		public FormGameSettings()

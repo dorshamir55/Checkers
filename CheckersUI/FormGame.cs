@@ -14,7 +14,7 @@ namespace CheckersUI
 {
 	public partial class FormGame : Form
 	{
-		private const int k_SquareSize = 40;
+		private const int k_SquareSize = 50;
 		private const int k_MarginWidthSpace = 30;
 		private const int k_MarginHeightSpace = 15;
 		private MatrixButtons<SquareButton> m_ButtonsMatrix;
@@ -69,6 +69,9 @@ namespace CheckersUI
 			labelPlayer2Score.Text = string.Format("{0}: {1}",
 			i_Player2.Name,
 			i_Player2.Score);
+			labelPlayer2Score.Left = ClientSize.Width - labelPlayer2Score.Width - pictureBoxDicePlayer1.Left;
+			pictureBoxBlackSign.Left = labelPlayer2Score.Left - pictureBoxBlackSign.Width;
+			pictureBoxDicePlayer2.Left = pictureBoxBlackSign.Left - pictureBoxDicePlayer2.Width;
 			if (m_GameLogic.CurrentPlayer.IsComputer())
 			{
 				changeTurnView();
