@@ -74,7 +74,7 @@ namespace CheckersUI
 
 		private void TextBoxPlayer_KeyPress(object sender, KeyPressEventArgs e)
 		{
-			if (e.KeyChar == ' ' || (sender as TextBox).TextLength == MaxNameSize && e.KeyChar != (char)Keys.Back)
+			if (e.KeyChar == ' ' || ((sender as TextBox).TextLength == MaxNameSize && e.KeyChar != (char)Keys.Back))
 			{
 				e.Handled = true;
 			}
@@ -82,7 +82,7 @@ namespace CheckersUI
 
 		private void ButtonDone_Click(object sender, EventArgs e)
 		{
-			if (textBoxPlayer1.Text.Equals("") || textBoxPlayer2.Text.Equals(""))
+			if (textBoxPlayer1.Text.Equals(string.Empty) || textBoxPlayer2.Text.Equals(string.Empty))
 			{
 				MessageBox.Show("Player name can't be blank", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
@@ -102,7 +102,7 @@ namespace CheckersUI
 			if (checkBoxPlayer2.Checked == true)
 			{
 				textBoxPlayer2.Enabled = true;
-				textBoxPlayer2.Text = "";
+				textBoxPlayer2.Text = string.Empty;
 			}
 			else
 			{

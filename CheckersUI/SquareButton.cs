@@ -53,9 +53,29 @@ namespace CheckersUI
 			}
 		}
 
+		public static bool operator ==(SquareButton i_SquareButtonA, SquareButton i_SquareButtonB)
+		{
+			return i_SquareButtonA.Col == i_SquareButtonB.Col && i_SquareButtonA.Row == i_SquareButtonB.Row;
+		}
+
+		public static bool operator !=(SquareButton i_SquareButtonA, SquareButton i_SquareButtonB)
+		{
+			return !(i_SquareButtonA == i_SquareButtonB);
+		}
+
+		public override bool Equals(object obj)
+		{
+			return base.Equals(obj);
+		}
+
+		public override int GetHashCode()
+		{
+			return base.GetHashCode();
+		}
+
 		public void initializeSquareButtonDetails(int i_Row, int i_Col, int i_BoardSize)
 		{
-			if (i_Row % 2 == 0 && i_Col % 2 == 0 || i_Row % 2 != 0 && i_Col % 2 != 0)
+			if ((i_Row % 2 == 0 && i_Col % 2 == 0) || (i_Row % 2 != 0 && i_Col % 2 != 0))
 			{
 				this.BackColor = Color.Black;
 				this.Enabled = false;
@@ -66,13 +86,11 @@ namespace CheckersUI
 				if (i_Col < (i_BoardSize / 2) - 1)
 				{
 					this.Enabled = false;
-					//this.Text = ((char)Square.ePlayerColor.White).ToString();// "O";
 					changeSquareToWhite();
 				}
 				else if (i_Col > i_BoardSize / 2)
 				{
 					this.Enabled = false;
-					//this.Text = ((char)Square.ePlayerColor.Black).ToString();// "X";
 					changeSquareToBlack();
 				}
 				else
@@ -105,26 +123,6 @@ namespace CheckersUI
 			}
 
 			return canMove;
-		}
-
-		public static bool operator ==(SquareButton i_SquareButtonA, SquareButton i_SquareButtonB)
-		{
-			return i_SquareButtonA.Col == i_SquareButtonB.Col && i_SquareButtonA.Row == i_SquareButtonB.Row;
-		}
-
-		public static bool operator !=(SquareButton i_SquareButtonA, SquareButton i_SquareButtonB)
-		{
-			return !(i_SquareButtonA == i_SquareButtonB);
-		}
-
-		public override bool Equals(object obj)
-		{
-			return base.Equals(obj);
-		}
-
-		public override int GetHashCode()
-		{
-			return base.GetHashCode();
 		}
 
 		public void changeSquareToWhite()

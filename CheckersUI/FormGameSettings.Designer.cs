@@ -17,6 +17,7 @@
 			{
 				components.Dispose();
 			}
+
 			base.Dispose(disposing);
 		}
 
@@ -177,4 +178,3 @@
 		private System.Windows.Forms.Button buttonDone;
 	}
 }
-

@@ -54,10 +54,8 @@ namespace CheckersUI
 		private void startGame()
 		{
 			createGameInfo(true);
-			//m_FormGame.PlayGame(m_GameLogic, m_GameSettings);
 			m_GameLogic.CalculatePlayerMoves();
 			m_FormGame = new FormGame(m_GameLogic);
-			//m_FormGame.changeSquareButtonVisibility();
 			while (m_FormGame.ShowDialog() == DialogResult.OK)
 			{
 				createGameInfo(false);
@@ -71,9 +69,6 @@ namespace CheckersUI
 			Player player1, player2;
 			Board board;
 			Player.ePlayerType player2Type;
-
-			//TODO check for another game
-
 			if (i_IsFirstGame)
 			{
 				player2Type = Player.ePlayerType.Human;

@@ -6,10 +6,10 @@ using System.Windows.Forms;
 
 namespace CheckersUI
 {
-	static class Program
+	public static class Program
 	{
 		[STAThread]
-		static void Main()
+		public static void Main()
 		{
 			Application.EnableVisualStyles();
 			new GameUI();

@@ -35,7 +35,6 @@ namespace CheckersUI
 			InitializeComponent();
 
 			m_GameLogic = i_GameLogic;
-			//this.BackColor = Color.SandyBrown;
 			initializeBoard((int)i_GameLogic.GameBoard.Size);
 			m_GameLogic.GameBoard.BoardValueChanged += GameBoard_BoardValueChanged;
 			initializeNameAndScores(i_GameLogic.CurrentPlayer, i_GameLogic.WaitingPlayer);
@@ -52,23 +51,16 @@ namespace CheckersUI
 			squareButtonChosen = new SquareButton(point);
 			switchSquareButtonVisibility(m_GameLogic.CurrentPlayer.IsComputer());
 			m_ButtonsMovesList = new List<SquareButton>();
-			
-			//Check if work:
 			if (m_GameLogic.CurrentPlayer.IsComputer())
 			{
 				runPcTurn(ref squareButtonChosen);
 			}
-			//
 		}
 
 		private void initializeNameAndScores(Player i_Player1, Player i_Player2)
 		{
-			labelPlayer1Score.Text = string.Format("{0}: {1}",
-			i_Player1.Name,
-			i_Player1.Score);
-			labelPlayer2Score.Text = string.Format("{0}: {1}",
-			i_Player2.Name,
-			i_Player2.Score);
+			labelPlayer1Score.Text = string.Format("{0}: {1}", i_Player1.Name, i_Player1.Score);
+			labelPlayer2Score.Text = string.Format("{0}: {1}", i_Player2.Name, i_Player2.Score);
 			labelPlayer2Score.Left = ClientSize.Width - labelPlayer2Score.Width - pictureBoxDicePlayer1.Left;
 			pictureBoxBlackSign.Left = labelPlayer2Score.Left - pictureBoxBlackSign.Width;
 			pictureBoxDicePlayer2.Left = pictureBoxBlackSign.Left - pictureBoxDicePlayer2.Width;
@@ -99,8 +91,7 @@ namespace CheckersUI
 		private void initializeBoard(int i_BoardSize)
 		{
 			m_ButtonsMatrix = new MatrixButtons<SquareButton>(i_BoardSize, i_BoardSize);
-			this.ClientSize = new Size(i_BoardSize * k_SquareSize + k_MarginWidthSpace, i_BoardSize * k_SquareSize + panelBoard.Top + k_MarginHeightSpace);
-
+			this.ClientSize = new Size((i_BoardSize * k_SquareSize) + k_MarginWidthSpace, (i_BoardSize * k_SquareSize) + panelBoard.Top + k_MarginHeightSpace);
 			for (int row = 0; row < i_BoardSize; row++)
 			{
 				for (int col = 0; col < i_BoardSize; col++)
@@ -235,13 +226,15 @@ namespace CheckersUI
 				m_GameLogic.CalculatePlayersScore();
 				if (m_GameLogic.IsDraw())
 				{
-					resultOfGame = string.Format(@"Tie
+					resultOfGame = string.Format(
+@"Tie
 {0}",
 question);
 				}
 				else
 				{
-					resultOfGame = string.Format(@"{0} Won!
+					resultOfGame = string.Format(
+@"{0} Won!
 {1}",
 m_GameLogic.WaitingPlayer.Name,
 question);
@@ -268,7 +261,6 @@ question);
 
 		private void runMove()
 		{
-			//MessageBox.Show("Update board");
 			m_GameLogic.CheckRewardKing();
 			m_GameLogic.RunMove(m_GameLogic.CurrentMove);
 			changeButtonsMoveToWhite();
@@ -276,7 +268,8 @@ question);
 
 		private string getMove(SquareButton i_SquareButtonChosen)
 		{
-			return string.Format("{0}{1}>{2}{3}",
+			return string.Format(
+@"{0}{1}>{2}{3}",
 						(char)(m_FromSquareButton.Row + 'A'),
 						(char)(m_FromSquareButton.Col + 'a'),
 						(char)(i_SquareButtonChosen.Row + 'A'),
