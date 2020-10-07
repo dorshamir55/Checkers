@@ -9,7 +9,7 @@ Included: Delegates, Events, Encapsulation, reusing, Abstraction, Composition, I
 ## Screenshots:
 ![Setting Game](https://github.com/Dorshamir55/Checkers/raw/master/ScreenShots/Settings_menu.png)
 ![Start Game](https://github.com/Dorshamir55/Checkers/raw/master/ScreenShots/Start_game.png)
-![Another Game - Points added](https://github.com/Dorshamir55/Checkers/raw/master/ScreenShots/Another_game_points_added.png)
+![Another Game - Points added](https://github.com/Dorshamir55/Checkers/raw/master/ScreenShots/Another_game_points_added.PNG)
 ![Playing](https://github.com/Dorshamir55/Checkers/raw/master/ScreenShots/Playing1.png)
 ![Playing 2](https://github.com/Dorshamir55/Checkers/raw/master/ScreenShots/Playing2.png)
 ![Playing 3](https://github.com/Dorshamir55/Checkers/raw/master/ScreenShots/Playing3.png)
